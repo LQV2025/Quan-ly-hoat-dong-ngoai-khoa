@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3>Admin Dashboard</h3>
+  <div>
+    <a href="{{ url_for('admin_activity_new') }}" class="btn btn-success">+ Thêm hoạt động</a>
+    <a href="{{ url_for('admin_users') }}" class="btn btn-warning">Quản lý tài khoản</a>
+    <a href="{{ url_for('admin_report') }}" class="btn btn-info">Báo cáo</a>
+  </div>
+</div>
+
+<table class="table table-hover">
+  <thead><tr><th>Tên</th><th>Ngày</th><th>Điểm tối đa</th><th>Hành động</th></tr></thead>
+  <tbody>
+    {% for a in activities %}
+    <tr>
+      <td>{{ a.name }}</td>
+      <td>{{ a.date }}</td>
+      <td>{{ a.max_score }}</td>
+      <td>
+        <a href="{{ url_for('admin_activity_edit', aid=a.id) }}" class="btn btn-sm btn-primary">Sửa</a>
+        <form method="post" action="{{ url_for('admin_activity_delete', aid=a.id) }}" style="display:inline;">
+          <button class="btn btn-sm btn-danger" onclick="return confirm('Xóa?')">Xóa</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-primary text-white py-3">
+            <h4 class="mb-0">
+                {% if activity %}Chỉnh sửa Hoạt động{% else %}Thêm Hoạt động Mới{% endif %}
+            </h4>
+        </div>
+
+        <div class="card-body p-4">
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Tên Hoạt động</label>
+                    <input type="text" class="form-control" name="name" required value="{{ activity.name if activity else '' }}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Mô tả</label>
+                    <textarea name="description" class="form-control" rows="4">{{ activity.description if activity else "" }}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Ngày diễn ra</label>
+                    <input type="date" class="form-control" name="date" value="{{ activity.date if activity else '' }}">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Điểm tối đa</label>
+                    <input type="number" class="form-control" name="max_score" min="1" value="{{ activity.max_score if activity else 10 }}">
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Quay lại</a>
+                    <button class="btn btn-success">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

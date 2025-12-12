@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Danh sách hoạt động</h3>
+<div class="row">
+  {% for a in activities %}
+  <div class="col-md-4 mb-4">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title">{{ a.name }}</h5>
+        <p class="card-text text-muted small">{{ a.date }}</p>
+        <p class="flex-grow-1">{{ a.description|truncate(120) }}</p>
+        <div>
+          <span class="badge bg-info">Điểm tối đa: {{ a.max_score }}</span>
+          <a href="{{ url_for('activity_detail', aid=a.id) }}" class="btn btn-outline-primary btn-sm float-end">Xem / Đăng ký</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: drl-ems
+    env: python
+    plan: free
+    region: singapore
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: drl-ems-db
+          property: connectionString
+
+databases:
+  - name: drl-ems-db
+    plan: free

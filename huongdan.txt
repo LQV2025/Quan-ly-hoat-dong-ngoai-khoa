@@ -1,0 +1,28 @@
+Mở terminal trong folder appNK:
+
+py -3.12 -m venv venv312 (dùng python 3.12.0)
+venv312\Scripts\activate
+pip install --upgrade pip
+pip install -r requirements.txt
+
+
+Tạo database & tạo tài khoản mẫu:
+
+python init_db.py
+
+
+---> DB initialized. Accounts: admin/admin123, teacher1/teach123, sv01/sv123
+
+Chạy app:
+
+python app.py
+
+
+Mở trình duyệt tới: http://127.0.0.1:5000
+
+Đăng nhập bằng admin/admin123.
+
+Up lên Internet:
+Mở terminal trong folder appNK: 
+	.\ngrok.exe http 5000
+--> link

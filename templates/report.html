@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h3>Báo cáo tổng hợp</h3>
+
+  <form method="get" class="row g-3 mb-3">
+    <div class="col-md-4">
+      <select name="class" class="form-select">
+        <option value="">-- Chọn lớp --</option>
+        {% for c in classes %}<option value="{{ c }}" {% if selected_class==c %}selected{% endif %}>{{ c }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary">Lọc</button>
+    </div>
+  </form>
+
+  {% if students %}
+  <table class="table table-striped">
+    <thead><tr><th>MSV</th><th>Họ tên</th><th>Tổng điểm</th></tr></thead>
+    <tbody>
+      {% for s in students %}
+      <tr>
+        <td>{{ s.student.student_id }}</td>
+        <td>{{ s.student.fullname }}</td>
+        <td>{{ s.total }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="text-muted">Chọn lớp để xem báo cáo.</p>
+  {% endif %}
+</div>
+{% endblock %}

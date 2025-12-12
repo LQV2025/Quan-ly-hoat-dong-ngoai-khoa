@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-3">Chỉnh sửa tài khoản</h2>
+    <form method="POST" class="row g-3">
+        <div class="col-md-4">
+            <label class="form-label">Username</label>
+            <input class="form-control" name="username" value="{{ user.username }}" required>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Họ tên</label>
+            <input class="form-control" name="fullname" value="{{ user.fullname }}">
+        </div>
+        <div class="col-md-2">
+            <label class="form-label">Role</label>
+            <select class="form-select" name="role">
+                <option value="student" {% if user.role=='student' %}selected{% endif %}>Student</option>
+                <option value="teacher" {% if user.role=='teacher' %}selected{% endif %}>Teacher</option>
+                <option value="admin" {% if user.role=='admin' %}selected{% endif %}>Admin</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label class="form-label">Lớp (nếu SV)</label>
+            <input class="form-control" name="class_name" value="{{ user.class_name or '' }}">
+        </div>
+        <div class="col-12">
+            <label class="form-label">Mật khẩu mới (để trống nếu không đổi)</label>
+            <input type="password" class="form-control" name="password">
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary">Lưu thay đổi</button>
+            <a href="{{ url_for('admin_users') }}" class="btn btn-secondary">Hủy</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

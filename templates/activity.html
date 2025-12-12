@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h4>{{ activity.name }}</h4>
+    <p class="text-muted">{{ activity.date }}</p>
+    <p>{{ activity.description }}</p>
+    <p><strong>Điểm tối đa: </strong>{{ activity.max_score }}</p>
+
+    {% if current_user.role == 'student' %}
+      {% if user_reg %}
+        <form method="post" action="{{ url_for('activity_cancel', aid=activity.id) }}">
+          <button class="btn btn-danger btn-sm">Hủy đăng ký</button>
+        </form>
+        <p class="mt-2 text-success">Bạn đã đăng ký: {{ user_reg.registered_at.strftime('%Y-%m-%d %H:%M') }}</p>
+      {% else %}
+        <form method="post">
+          <button class="btn btn-success">Đăng ký tham gia</button>
+        </form>
+      {% endif %}
+    {% endif %}
+
+    {% if message %}<div class="alert alert-info mt-3">{{ message }}</div>{% endif %}
+
+    {% if current_user.role in ['teacher','admin'] %}
+      <hr>
+      <h5>Danh sách sinh viên đã đăng ký</h5>
+      <table class="table table-sm">
+        <thead><tr><th>MSSV</th><th>Họ tên</th><th>Đăng ký</th><th>Đánh giá</th></tr></thead>
+        <tbody>
+          {% for r in regs %}
+          <tr>
+            <td>{{ r.user.student_id or '-' }}</td>
+            <td>{{ r.user.fullname }}</td>
+            <td>{{ r.registered_at.strftime('%Y-%m-%d') }}</td>
+            <td>
+              {% set ev = r.evaluation[0] if r.evaluation else None %}
+              {% if ev %}
+                {{ ev.level }} ({{ ev.percent }}%)
+              {% else %}
+                Chưa đánh giá
+              {% endif %}
+              {% if current_user.role == 'teacher' %}
+                <a class="btn btn-sm btn-primary ms-2" href="{{ url_for('teacher_activity', aid=activity.id) }}">Đánh giá</a>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

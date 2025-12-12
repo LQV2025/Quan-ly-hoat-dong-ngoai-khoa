@@ -1,0 +1,5 @@
+body { background: linear-gradient(120deg, #f4f9ff 0%, #ffffff 100%); font-family: Arial, sans-serif; }
+.navbar-brand { color: #0d6efd !important; }
+.card { border-radius: 12px; }
+.btn-primary { background: linear-gradient(90deg,#0d6efd,#6610f2); border: none; }
+.table-hover tbody tr:hover { background:#f8f9fb; }

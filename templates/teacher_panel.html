@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Teacher Panel</h3>
+
+{% if not students %}
+<div class="list-group mb-4">
+  {% for a in activities %}
+  <a class="list-group-item list-group-item-action" href="{{ url_for('teacher_activity', aid=a.id) }}">
+    {{ a.name }} — {{ a.date }} — điểm tối đa: {{ a.max_score }}
+  </a>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% if students %}
+<h5>Đánh giá cho: {{ activity.name }}</h5>
+<table class="table">
+  <thead><tr><th>SV</th><th>MSSV</th><th>Đánh giá</th><th>Ghi chú</th></tr></thead>
+  <tbody>
+    {% for it in students %}
+    <tr>
+      <td>{{ it.student.fullname }}</td>
+      <td>{{ it.student.student_id }}</td>
+      <td>
+        <form method="post" action="{{ url_for('teacher_rate', reg_id=it.reg.id) }}">
+          <select name="level" class="form-select form-select-sm d-inline-block w-auto" onchange="this.form.submit()">
+            <option value="none" {% if it.rating == 0 %}selected{% endif %}>Không tham gia (0%)</option>
+            <option value="attend" {% if it.rating == 80 %}selected{% endif %}>Tham gia (80%)</option>
+            <option value="active" {% if it.rating == 100 %}selected{% endif %}>Tham gia tích cực (100%)</option>
+          </select>
+        </form>
+      </td>
+      <td>{{ it.evaluation.note if it.evaluation else '' }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+{% endblock %}
